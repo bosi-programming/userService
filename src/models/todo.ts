@@ -1,10 +1,17 @@
 import mongoose from 'mongoose';
 
+enum status {
+  'naoIniciado',
+  'emProgresso',
+  'completo'
+}
+
 interface ITodo {
-  userEmail: string;
+  userId: string;
   nome: string;
   data: Date;
   hora: string;
+  status?: status
 }
 
 interface TodoModelInterface extends mongoose.Model<any> {
@@ -12,7 +19,7 @@ interface TodoModelInterface extends mongoose.Model<any> {
 }
 
 const todoSchema = new mongoose.Schema({
-  userEmail: {
+  userId: {
     type: String,
     required: true
   }, 
@@ -27,6 +34,11 @@ const todoSchema = new mongoose.Schema({
   hora: {
     type: String,
     required: true
+  },
+  status: {
+    type: String,
+    enum: ['naoIniciado', 'emProgresso', 'completo'],
+    required: false
   }
 })
 

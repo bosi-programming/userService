@@ -14,7 +14,7 @@ export const verifyJWT = (req: any, res: any, next: any) => {
         .json({ auth: false, message: "Failed to authenticate token." });
     }
 
-    req.userId = decoded.id;
+    req.body.userId = decoded.id;
     next();
   });
 };

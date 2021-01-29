@@ -12,7 +12,7 @@ export const userRouter = express.Router();
 userRouter.post("/api/users", async (req, res) => {
   const { cpf, email, telefone, senha } = req.body;
 
-  if (!testCPF(cpf)) {
+  if (!testCPF(cpf.replace(/[^\w\s]/gi, ''))) {
     res.status(400).json("CPF com erro");
     return;
   } else if (!/(\(?\d{2}\)?\s)?(\d{4,5}\-\d{4})/.test(telefone)) {

@@ -76,6 +76,19 @@ Não é obrigatório para o cadastro da tarefa, mas o sistema também aceita val
 
 - status: enum com um dos valores: "naoIniciado", "emProgresso" ou "completo".
 
+#### PUT
+
+Um put neste endpoint atualiza uma tarefa em específico do usuário do sistema. Para isso precisamos tanto do webtoken do usuário, do nome da tarefa a ser atualizada e os dados a serem modificados, sendo que qualquer mudança no nome deve ser passada como newNome. Os parâmetros mínimos são:
+
+- nome: nome da tarefa a ser atualizada em string.
+
+Pelo menos um entre os parâmetros abaixo:
+
+- newNome: string com o novo nome dado a ser dado a tarefa;
+- data: string com data a ser finalizada a tarefa;
+- hora: string hora da tarefa;
+- status: enum com um dos valores: "naoIniciado", "emProgresso" ou "completo".
+
 #### Delete
 
 Um delete neste endpoint deleta uma tarefa específica cadastrada na conta do usuário. Para isso, além do webtoken, precisamos:

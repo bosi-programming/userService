@@ -95,8 +95,47 @@ exports.todoRouter.delete("/api/todo", function (req, res) { return __awaiter(vo
         }
     });
 }); });
+exports.todoRouter.put("/api/todo", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, userId, nome, newNome, data, hora, status, existeTodo, date, finalNome, finalHora, finalStatus, updateTodo, e_1;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _a = req.body, userId = _a.userId, nome = _a.nome, newNome = _a.newNome, data = _a.data, hora = _a.hora, status = _a.status;
+                return [4 /*yield*/, todo_1.Todo.find({ userId: userId, nome: nome })];
+            case 1:
+                existeTodo = _b.sent();
+                if (!Boolean(existeTodo)) {
+                    res.status(404).json({ message: "Tarefa inexistente em nosso sistema" });
+                    return [2 /*return*/];
+                }
+                date = data ? new Date(data) : existeTodo[0].data;
+                finalNome = newNome ? newNome : nome;
+                finalHora = hora ? hora : existeTodo[0].hora;
+                finalStatus = status ? status : existeTodo[0].status;
+                _b.label = 2;
+            case 2:
+                _b.trys.push([2, 4, , 5]);
+                return [4 /*yield*/, todo_1.Todo.findOneAndUpdate({ userId: userId, nome: nome }, {
+                        userId: userId,
+                        nome: finalNome,
+                        data: date,
+                        hora: finalHora,
+                        status: finalStatus,
+                    })];
+            case 3:
+                updateTodo = _b.sent();
+                res.status(200).json(updateTodo);
+                return [3 /*break*/, 5];
+            case 4:
+                e_1 = _b.sent();
+                res.status(400).json(e_1);
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
+        }
+    });
+}); });
 exports.todoRouter.post("/api/todo", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, userId, nome, data, hora, status, existeTodo, _b, date, newTodo, e_1;
+    var _a, userId, nome, data, hora, status, existeTodo, _b, date, finalStatus, newTodo, e_2;
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0:
@@ -110,6 +149,7 @@ exports.todoRouter.post("/api/todo", function (req, res) { return __awaiter(void
                     return [2 /*return*/];
                 }
                 date = new Date(data);
+                finalStatus = status || null;
                 _c.label = 2;
             case 2:
                 _c.trys.push([2, 4, , 5]);
@@ -118,7 +158,7 @@ exports.todoRouter.post("/api/todo", function (req, res) { return __awaiter(void
                     nome: nome,
                     data: date,
                     hora: hora,
-                    status: status || null,
+                    status: finalStatus,
                 });
                 return [4 /*yield*/, newTodo.save()];
             case 3:
@@ -126,8 +166,8 @@ exports.todoRouter.post("/api/todo", function (req, res) { return __awaiter(void
                 res.status(200).json(newTodo);
                 return [3 /*break*/, 5];
             case 4:
-                e_1 = _c.sent();
-                res.status(400).json(e_1);
+                e_2 = _c.sent();
+                res.status(400).json(e_2);
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
         }
@@ -171,7 +211,7 @@ exports.todoRouter.post("/api/todo/bulk", upload.single("tabela"), verifyToken_1
                         nome = line[nomeColumn];
                         date = new Date(line[dataColumn]);
                         hora = line[horaColumn];
-                        status = line[statusColumn] || null;
+                        status = line[statusColumn] ? line[statusColumn] : null;
                         if (!nome || !date || !hora) {
                             res.status(400).json({
                                 message: "Est\u00E1 faltando dados na sua tabela na linha " + (index + 1) + ", confira se h\u00E1 todos os dados necess\u00E1rios nela",

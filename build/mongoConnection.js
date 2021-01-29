@@ -11,6 +11,7 @@ var connectToDataBase = function () {
         useCreateIndex: true,
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        useFindAndModify: false,
     }, function () {
         console.log("connect to database");
     });

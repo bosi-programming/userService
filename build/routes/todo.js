@@ -87,9 +87,10 @@ exports.todoRouter.delete("/api/todo", function (req, res) { return __awaiter(vo
                 deleteTodo = _b.sent();
                 if (deleteTodo.deletedCount === 0) {
                     res.status(404).json({ message: "Tarefa não encontrada" });
-                    return [2 /*return*/];
                 }
-                res.status(200).json(__assign(__assign({}, deleteTodo), { message: "Tarefa deletada" }));
+                else {
+                    res.status(200).json(__assign(__assign({}, deleteTodo), { message: "Tarefa deletada" }));
+                }
                 return [2 /*return*/];
         }
     });

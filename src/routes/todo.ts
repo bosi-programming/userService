@@ -26,10 +26,9 @@ todoRouter.delete("/api/todo", async (req, res) => {
 
   if (deleteTodo.deletedCount === 0) {
     res.status(404).json({ message: "Tarefa não encontrada" });
-    return;
+  } else {
+    res.status(200).json({ ...deleteTodo, message: "Tarefa deletada" });
   }
-
-  res.status(200).json({ ...deleteTodo, message: "Tarefa deletada" });
 });
 
 todoRouter.post("/api/todo", async (req, res) => {

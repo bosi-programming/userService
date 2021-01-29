@@ -8,14 +8,16 @@ var express_1 = __importDefault(require("express"));
 var body_parser_1 = __importDefault(require("body-parser"));
 var login_1 = require("./routes/login");
 var todo_1 = require("./routes/todo");
+var user_1 = require("./routes/user");
 var mongoConnection_1 = require("./mongoConnection");
 exports.notSoSecret = "banana";
 var app = express_1.default();
-var port = 3000;
+var port = process.env.PORT || 3000;
 mongoConnection_1.connectToDataBase();
 app.use(body_parser_1.default.json());
 app.use(login_1.loginRouter);
 app.use(todo_1.todoRouter);
+app.use(user_1.userRouter);
 app.listen(port, function () {
     console.log("Listening on port:" + port);
 });

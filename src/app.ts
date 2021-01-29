@@ -10,13 +10,14 @@ import { connectToDataBase } from "./mongoConnection";
 export const notSoSecret = "banana";
 
 const app: express.Application = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 connectToDataBase();
 
 app.use(bodyParser.json());
 
 app.use(loginRouter);
 app.use(todoRouter);
+app.use(userRouter);
 
 app.listen(port, () => {
   console.log("Listening on port:" + port);

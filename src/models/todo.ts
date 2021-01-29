@@ -11,7 +11,7 @@ interface ITodo {
   nome: string;
   data: Date;
   hora: string;
-  status?: status
+  status?: status | null;
 }
 
 interface TodoModelInterface extends mongoose.Model<any> {

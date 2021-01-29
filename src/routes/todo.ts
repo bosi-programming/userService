@@ -31,6 +31,37 @@ todoRouter.delete("/api/todo", async (req, res) => {
   }
 });
 
+todoRouter.put("/api/todo", async (req, res) => {
+  const { userId, nome, newNome, data, hora, status } = req.body;
+  const existeTodo = await Todo.find({ userId, nome });
+
+  if (!Boolean(existeTodo)) {
+    res.status(404).json({ message: "Tarefa inexistente em nosso sistema" });
+    return;
+  }
+
+  const date = data? new Date(data) : existeTodo[0].data;
+  const finalNome = newNome ? newNome : nome;
+  const finalHora = hora ? hora : existeTodo[0].hora;
+  const finalStatus = status ? status : existeTodo[0].status;
+
+  try {
+    const updateTodo = await Todo.findOneAndUpdate(
+      { userId, nome },
+      {
+        userId,
+        nome: finalNome,
+        data: date,
+        hora: finalHora,
+        status: finalStatus,
+      }
+    );
+    res.status(200).json(updateTodo);
+  } catch (e) {
+    res.status(400).json(e);
+  }
+});
+
 todoRouter.post("/api/todo", async (req, res) => {
   const { userId, nome, data, hora, status } = req.body;
 
@@ -42,6 +73,7 @@ todoRouter.post("/api/todo", async (req, res) => {
   }
 
   const date = new Date(data);
+  const finalStatus = status || null;
 
   try {
     const newTodo = Todo.build({
@@ -49,7 +81,7 @@ todoRouter.post("/api/todo", async (req, res) => {
       nome,
       data: date,
       hora,
-      status: status || null,
+      status: finalStatus,
     });
     await newTodo.save();
     res.status(200).json(newTodo);
@@ -97,7 +129,7 @@ todoRouter.post(
       const nome = line[nomeColumn];
       const date = new Date(line[dataColumn]);
       const hora = line[horaColumn];
-      const status = line[statusColumn] || null;
+      const status = line[statusColumn] ? line[statusColumn] : null;
 
       if (!nome || !date || !hora) {
         res.status(400).json({

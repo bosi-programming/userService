@@ -10,6 +10,7 @@ export const connectToDataBase = () => {
       useCreateIndex: true,
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useFindAndModify: false,
     },
     () => {
       console.log("connect to database");

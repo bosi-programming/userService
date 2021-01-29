@@ -64,7 +64,7 @@ exports.userRouter.post("/api/users", function (req, res) { return __awaiter(voi
         switch (_b.label) {
             case 0:
                 _a = req.body, cpf = _a.cpf, email = _a.email, telefone = _a.telefone, senha = _a.senha;
-                if (!testCPF_1.testCPF(cpf)) {
+                if (!testCPF_1.testCPF(cpf.replace(/[^\w\s]/gi, ''))) {
                     res.status(400).json("CPF com erro");
                     return [2 /*return*/];
                 }

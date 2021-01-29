@@ -2,11 +2,12 @@
   "name": "content-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./build/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc",
-    "dev": "ts-node-dev --inspect --respawn --ignore-watch node_modules src/app.ts"
+    "dev": "ts-node-dev --inspect --respawn --ignore-watch node_modules src/app.ts",
+    "start": "node ./build/app.js"
   },
   "author": "",
   "license": "ISC",

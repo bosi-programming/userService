@@ -1,7 +1,9 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
+import { decrypt } from './util/encryption';
 
-const url =
-  "mongodb+srv://userBosi:ryfAwtPiPoxstV8t@cluster0.wqqph.mongodb.net/test?retryWrites=true&w=majority";
+const url = decrypt(
+  `rEHsfbNLpwcGrxiRqUc8odqlSRRYsy9uAJOUXBwW0r6bX1QA9iaqQi2zJWQFYnt5hIlNiThpftpyW/J2sGGekhYeGOeBeHWE73hUpiPV4waDBvWxeieknQw3DKqF6tdnverGwGxC8KuA4rqDSOA5UpKRrp8dbcmnHzNi1rsukpmjjx049i7VSkYfuok3YWp5itsf/5DQyFESTvV7rEsu5R6HBE4UtVnQkqL211V/xQUcnb7s76TYmhfgxG0PZ8S7qDW5WwqdQpk=`,
+);
 
 export const connectToDataBase = () => {
   mongoose.connect(
@@ -13,7 +15,7 @@ export const connectToDataBase = () => {
       useFindAndModify: false,
     },
     () => {
-      console.log("connect to database");
-    }
+      console.log('connect to database');
+    },
   );
 };

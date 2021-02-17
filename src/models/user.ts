@@ -1,38 +1,48 @@
 import mongoose from 'mongoose';
 
+enum roleEnum {
+  MAIN,
+  WRITER,
+}
+
 interface IUser {
-  email: string;
-  telefone: string;
-  senha: string;
-  cpf: string;
+  userName: string;
+  authorName: string;
+  role: roleEnum;
+  mainAccount: string;
+  password: string;
 }
 
 interface UserModelInterface extends mongoose.Model<any> {
-  build(attr: IUser): any
+  build(attr: IUser): any;
 }
 
 const userSchema = new mongoose.Schema({
-  email: {
+  userName: {
     type: String,
-    required: true
+    required: true,
   },
-  telefone: {
+  authorName: {
     type: String,
-    required: true
+    required: true,
   },
-  senha: {
+  role: {
     type: String,
-    required: true
+    enum: ['MAIN', 'WRITER'],
+    required: true,
   },
-  cpf: {
+  mainAccount: {
     type: String,
-    required: true
-  }
-})
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+});
 
 userSchema.statics.build = (attr: IUser) => {
   return new User(attr);
-}
+};
 
 export const User = mongoose.model<any, UserModelInterface>('User', userSchema);
-

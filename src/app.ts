@@ -1,9 +1,8 @@
 import express from "express";
 import bodyParser from "body-parser";
 
-import { loginRouter } from './routes/login';
-import { todoRouter } from './routes/todo';
-import { userRouter } from './routes/user';
+import { loginRouter } from "./routes/login";
+import { userRouter } from "./routes/user";
 
 import { connectToDataBase } from "./mongoConnection";
 
@@ -16,7 +15,6 @@ connectToDataBase();
 app.use(bodyParser.json());
 
 app.use(loginRouter);
-app.use(todoRouter);
 app.use(userRouter);
 
 app.listen(port, () => {

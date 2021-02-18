@@ -9,22 +9,22 @@ import { User } from "../models/user";
 export const loginRouter = express.Router();
 
 loginRouter.post("/api/login", async (req, res) => {
-  const { email, senha } = req.body;
+  const { userName, password } = req.body;
 
-  const user = await User.find({ email });
+  const user = await User.find({ userName });
 
   if (!user) {
     res.status(400).json("Usuário não encontrado");
     return;
   }
-  if (!senha) {
+  if (!password) {
     res.status(400).json("Favor escrever sua senha");
     return;
   }
 
-  const senhaDoBancoDecrypt = decrypt(user[0].senha);
+  const senhaDoBancoDecrypt = decrypt(user[0].password);
 
-  if (senha !== senhaDoBancoDecrypt) {
+  if (password !== senhaDoBancoDecrypt) {
     res.status(400).json("Senha errada");
     return;
   }

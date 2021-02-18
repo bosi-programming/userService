@@ -1,9 +1,7 @@
 import mongoose from 'mongoose';
-import { decrypt } from './util/encryption';
+import { decrypt, encrypt } from './util/encryption';
 
-const url = decrypt(
-  `rEHsfbNLpwcGrxiRqUc8odqlSRRYsy9uAJOUXBwW0r6bX1QA9iaqQi2zJWQFYnt5hIlNiThpftpyW/J2sGGekhYeGOeBeHWE73hUpiPV4waDBvWxeieknQw3DKqF6tdnverGwGxC8KuA4rqDSOA5UpKRrp8dbcmnHzNi1rsukpmjjx049i7VSkYfuok3YWp5itsf/5DQyFESTvV7rEsu5R6HBE4UtVnQkqL211V/xQUcnb7s76TYmhfgxG0PZ8S7qDW5WwqdQpk=`,
-);
+const url = decrypt('YbeAuyhVGSEnwn/vdm/x5G2hG1U1BRDMPrvT7vn+4XBv9tpkRTqQOjSb9rjz1Gc277KL81F0BUkOoL72j8gpgy/CMmRcVMwQHLnEOWIOJrQ5j34nZP07iXcaK+5INaci2nRKSjd0NzQwLqiF58GxwBLp5E+lT+Coalg0GL807tX2YVA8yolGrT3C4bZ6oZ5ZbAlgODHitie25giwa0XriBCnpI4pqo2YS9TsSarQ6koJmB0aJL3a1i1SLvpLHxRRtwbj');
 
 export const connectToDataBase = () => {
   mongoose.connect(

@@ -5,7 +5,7 @@ import { verifyJWT } from "../util/verifyToken";
 
 import { User } from "../models/user";
 
-export const userRouter = express.Router();
+const userRouter = express.Router();
 
 userRouter.post("/api/users", async (req, res) => {
   const { userName, authorName, role, mainAccount, password } = req.body;
@@ -31,3 +31,5 @@ userRouter.delete("/api/users", verifyJWT, async (req, res) => {
     res.status(200).json({ ...deleteUser, message: "Usuário deletado do sistema" });
   }
 });
+
+export default userRouter;

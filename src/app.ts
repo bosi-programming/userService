@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 
 import { loginRouter } from "./routes/login";
-import { userRouter } from "./routes/user";
+import userRouter from "./routes/user";
 
 import { connectToDataBase } from "./mongoConnection";
 
@@ -17,6 +17,9 @@ app.use(bodyParser.json());
 app.use(loginRouter);
 app.use(userRouter);
 
-app.listen(port, () => {
+export const server = app.listen(port, () => {
   console.log("Listening on port:" + port);
 });
+
+
+export default app;

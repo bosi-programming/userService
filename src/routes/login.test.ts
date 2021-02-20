@@ -59,7 +59,7 @@ describe('Test the login route', () => {
     request(app)
       .post('/api/login')
       .set('Accept', 'application/json')
-      .send({ userName: 'nonExisting'})
+      .send({ userName: 'test' })
       .then((res) => {
         expect(res.status).toBe(400);
         expect(res.body.message).toBe("Please write a password");

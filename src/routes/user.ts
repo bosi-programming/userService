@@ -23,7 +23,7 @@ userRouter.post("/api/users", async (req, res) => {
 userRouter.delete("/api/users", verifyJWT, async (req, res) => {
   const { userId, userName } = req.body;
 
-  const deleteUser = await User.deleteOne({ userId, userName });
+  const deleteUser = await User.deleteOne({ _id: userId, userName });
 
   if(deleteUser.deletedCount === 0) {
     res.status(400).json({ message: "Usuário não existe em nosso sistema"});

@@ -12,26 +12,12 @@ describe('Test the user route', () => {
     mongoose.disconnect(done);
   });
 
-  test('It should receive a 200 for a valid fake new user', async (done) => {
-    await request(app)
-      .post('/api/users')
-      .set('Accept', 'application/json')
-      .send({ userName: 'fakeNewUser', authorName: 'fakeNewAuthor', role: 'MAIN', mainAccount: 'fakeNewUser', password: '123456' })
-      .then((res) => {
-        expect(res.status).toBe(200);
-        done();
-      })
-      .catch((err) => {
-        done(err);
-      });
-  });
-
-  test('It should receive a 200 for delete a valid user', async (done) => {
+  test('It should receive a 200 for verify token for a valid user', async (done) => {
     let token = '';
     await request(app)
       .post('/api/login')
       .set('Accept', 'application/json')
-      .send({ userName: 'fakeNewUser', password: '123456' })
+      .send({ userName: 'test', password: '123456' })
       .then((res) => {
         token = res.body.token;
       })
@@ -39,12 +25,13 @@ describe('Test the user route', () => {
         done(err);
       });
     await request(app)
-      .delete('/api/users')
+      .post('/api/verify-token')
       .set('Accept', 'application/json')
       .set('x-access-token', token)
-      .send({ userName: 'fakeNewUser' })
+      .send()
       .then((res) => {
         expect(res.status).toBe(200);
+        console.log(res.body);
         done();
       })
       .catch((err) => {
@@ -52,3 +39,4 @@ describe('Test the user route', () => {
       });
   });
 })
+

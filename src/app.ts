@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 
 import { loginRouter } from "./routes/login";
 import userRouter from "./routes/user";
+import verifyRouter from "./routes/verifyToken";
 
 import { connectToDataBase } from "./mongoConnection";
 
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 
 app.use(loginRouter);
 app.use(userRouter);
+app.use(verifyRouter);
 
 export const server = app.listen(port, () => {
   console.log("Listening on port:" + port);

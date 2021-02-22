@@ -4,7 +4,7 @@
   "description": "",
   "main": "./build/app.js",
   "scripts": {
-    "test": "jest --runInBand --watchAll --verbose",
+    "test": "jest --runInBand --watchAll --verbose --coverage",
     "build": "tsc",
     "dev": "ts-node-dev --inspect --respawn --ignore-watch node_modules src/app.ts",
     "start": "node ./build/app.js"

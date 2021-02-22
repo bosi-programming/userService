@@ -19,9 +19,7 @@ app.use(loginRouter);
 app.use(userRouter);
 app.use(verifyRouter);
 
-export const server = app.listen(port, () => {
-  console.log("Listening on port:" + port);
-});
+export const server = app.listen(port);
 
 
 export default app;

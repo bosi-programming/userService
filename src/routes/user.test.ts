@@ -26,8 +26,22 @@ describe('Test the user route', () => {
       });
   });
 
-  test('It should receive a 200 for delete a valid user', async (done) => {
+  test('It should receive a 400 for a invalid fake new user', async (done) => {
+    await request(app)
+      .post('/api/users')
+      .set('Accept', 'application/json')
+      .send({ userName: 'fakeNewUser', role: 'MAIN', mainAccount: 'fakeNewUser', password: '123456' })
+      .then((res) => {
+        expect(res.status).toBe(400);
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
     let token = '';
+  test('It should receive a 200 for delete a valid user', async (done) => {
     await request(app)
       .post('/api/login')
       .set('Accept', 'application/json')
@@ -45,6 +59,21 @@ describe('Test the user route', () => {
       .send({ userName: 'fakeNewUser' })
       .then((res) => {
         expect(res.status).toBe(200);
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  test('It should receive a 400 for delete an invalid user', async (done) => {
+    await request(app)
+      .delete('/api/users')
+      .set('Accept', 'application/json')
+      .set('x-access-token', token)
+      .send({ userName: 'notFakeNewUser' })
+      .then((res) => {
+        expect(res.status).toBe(400);
         done();
       })
       .catch((err) => {

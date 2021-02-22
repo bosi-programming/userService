@@ -12,8 +12,5 @@ export const connectToDataBase = () => {
       useUnifiedTopology: true,
       useFindAndModify: false,
     },
-    () => {
-      console.log('connect to database');
-    },
   );
 };

@@ -10,11 +10,6 @@ verifyRouter.post('/api/verify-token', verifyJWT, async (req, res) => {
 
   const user = await User.find({ _id: userId });
 
-  if (!user[0]) {
-    res.status(400).json({ message: 'There is a problem with your token. Try to login again' });
-    return;
-  }
-
   // Hide password
   user[0].password = null;
   res.status(200).json(user[0]);

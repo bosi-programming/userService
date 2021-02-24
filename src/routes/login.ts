@@ -3,36 +3,37 @@ import jwt from 'jsonwebtoken';
 
 import { notSoSecret } from '../app';
 import { decrypt } from '../util/encryption';
+import { validateUser } from '../util/validateUser';
 
-import { User } from '../models/user';
+import { IUser } from '../models/user';
 
 export const loginRouter = express.Router();
 
 loginRouter.post('/api/login', async (req, res) => {
   const { userName, password } = req.body;
+  try {
+    const user = await validateUser(userName);
+    validatePassword(user, password);
 
-  const user = await User.find({ userName });
+    const userId = user._id;
+    const token = jwt.sign({ id: userId }, notSoSecret, {
+      expiresIn: '2 days',
+    });
 
-  if (!user[0]) {
-    res.status(400).json({ message: 'User not found' });
-    return;
+    res.status(200).json({ token });
+  } catch (e) {
+    res.status(e.status).json(e);
   }
-  if (!password) {
-    res.status(400).json({ message: 'Please write a password' });
-    return;
-  }
-
-  const senhaDoBancoDecrypt = decrypt(user[0].password);
-
-  if (password !== senhaDoBancoDecrypt) {
-    res.status(400).json({ message: 'Wrong password' });
-    return;
-  }
-
-  const userId = user[0]._id;
-  const token = jwt.sign({ id: userId }, notSoSecret, {
-    expiresIn: 3000,
-  });
-
-  res.status(200).json({ token });
 });
+
+const validatePassword = (user: IUser, password: string) => {
+  if (!password) {
+    throw { message: 'Please write a password', status: 400 };
+  }
+
+  const decriptedPassword = decrypt(user.password);
+
+  if (password !== decriptedPassword) {
+    throw { message: 'Wrong password', status: 400 };
+  }
+};

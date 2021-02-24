@@ -5,7 +5,7 @@ enum roleEnum {
   WRITER,
 }
 
-interface IUser {
+export interface IUser {
   userName: string;
   authorName: string;
   role: roleEnum;

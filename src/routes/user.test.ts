@@ -80,4 +80,18 @@ describe('Test the user route', () => {
         done(err);
       });
   });
+
+  test('It should receive a 400 for an existing user', async (done) => {
+    await request(app)
+      .post('/api/users')
+      .set('Accept', 'application/json')
+      .send({ userName: 'test', role: 'MAIN', mainAccount: 'fakeNewUser', password: '123456' })
+      .then((res) => {
+        expect(res.status).toBe(400);
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
 })

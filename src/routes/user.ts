@@ -11,7 +11,7 @@ const userRouter = express.Router();
 userRouter.post('/api/users', async (req, res) => {
   const { userName, authorName, role, mainAccount, password } = req.body;
 
-  const hashedPassword = encrypt(password);
+  const hashedPassword = encrypt(password, 'banana');
   try {
     const newUser = User.build({ userName, authorName, role, mainAccount, password: hashedPassword });
     const isExistingUser = Boolean(await checkForExistingUser(userName));

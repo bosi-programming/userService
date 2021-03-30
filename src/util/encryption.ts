@@ -1,8 +1,6 @@
 import crypto from "crypto";
 
-const masterKey = "banana";
-
-export const encrypt = (senha: string) => {
+export const encrypt = (senha: string, masterKey: string) => {
   const iv = crypto.randomBytes(16);
 
   const salt = crypto.randomBytes(64);
@@ -21,7 +19,7 @@ export const encrypt = (senha: string) => {
   return Buffer.concat([salt, iv, tag, encrypted]).toString("base64");
 };
 
-export const decrypt = (encryptSenha: string) => {
+export const decrypt = (encryptSenha: string, masterKey: string) => {
   const bData = Buffer.from(encryptSenha, "base64");
 
   const salt = bData.slice(0, 64);

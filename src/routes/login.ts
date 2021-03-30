@@ -31,7 +31,7 @@ const validatePassword = (user: IUser, password: string) => {
     throw { message: 'Please write a password', status: 400 };
   }
 
-  const decriptedPassword = decrypt(user.password);
+  const decriptedPassword = decrypt(user.password, 'banana');
 
   if (password !== decriptedPassword) {
     throw { message: 'Wrong password', status: 400 };
